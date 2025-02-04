@@ -86,7 +86,7 @@ class CarlaEnv(gym.Env):
     # Connect to carla server and get world object
     print('connecting to Carla server...')
     client = carla.Client('localhost', params['port'])
-    client.set_timeout(10.0)
+    client.set_timeout(60.0)
     self.world = client.load_world(params['town'])
     print('Carla server connected!')
 
@@ -493,7 +493,7 @@ class CarlaEnv(gym.Env):
     point_cloud = []
     # Get point cloud data
     for location in self.lidar_data:
-      point_cloud.append([location.x, location.y, -location.z])
+      point_cloud.append([location.point.x, location.point.y, -location.point.z])
     point_cloud = np.array(point_cloud)
     # Separate the 3D space to bins for point cloud, x and y is set according to self.lidar_bin,
     # and z is set to be two bins.
